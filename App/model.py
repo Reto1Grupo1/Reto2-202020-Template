@@ -48,6 +48,36 @@ def loadCSVFile (file, sep=";"):
     return lst
 
 
+def newCatalog():
+    """ Inicializa el catálogo de libros
+
+    Crea una lista vacia para guardar todos los libros
+
+    Se crean indices (Maps) por los siguientes criterios:
+    Autores
+    ID libros
+    Tags
+    Año de publicacion
+
+    Retorna el catalogo inicializado.
+    """
+    catalog = {'movies': None,
+               'id': None,
+               'production_companies': None,}
+    catalog['movies'] = lt.newList('SINGLE_LINKED',compareIds)
+    catalog['id'] = mp.newMap(2000,4001,
+                                   maptype='PROBING',
+                                   loadfactor=0.4,
+                                   comparefunction=compareMovieMoviesIds)
+    catalog['production_companies'] = mp.newMap(2000,4001,
+                                   maptype='PROBING',
+                                   loadfactor=0.4,
+                                   comparefunction=compareProductionCompaniesByName)
+
+    return catalog
+
+
+
 
 # Funciones para agregar informacion al catalogo
 
@@ -56,8 +86,25 @@ def loadCSVFile (file, sep=";"):
 # ==============================
 # Funciones de consulta
 # ==============================
+<<<<<<< HEAD
 def moviessize (listadetails):
     return lt.size(listadetails)
+=======
+def moviesSize(catalog):
+    """
+    Número de libros en el catago
+    """
+    return lt.size(catalog["production_companies"])
+def getMoviesByProductionComapnie(catalog, production_companie_name):
+    """
+    Retorna un autor con sus libros a partir del nombre del autor
+    """
+    production_companie = mp.get(catalog['production_companies'], production_companie_name)
+    if production_companie:
+        return me.getValue(production_companie)
+    return None
+
+>>>>>>> j.caceresc
 
 
 def lastelement (listadetails):
@@ -83,5 +130,94 @@ def firstelement (listadetails):
 # ==============================
 # Funciones de Comparacion
 # ==============================
+def compareMovieMoviesIds(id, entry):
+    """
+    Compara dos ids de libros, id es un identificador
+    y entry una pareja llave-valor
+    """
+    identry = me.getKey(entry)
+    if (int(id) == int(identry)):
+        return 0
+    elif (int(id) > int(identry)):
+        return 1
+    else:
+        return -1
+
+
+
+def compareProductionCompaniesByName(keyname, production_companie):
+    """
+    Compara dos nombres de autor. El primero es una cadena
+    y el segundo un entry de un map
+    """
+    compentry = me.getKey(production_companie)
+    if (keyname == compentry):
+        return 0
+    elif (keyname > compentry):
+        return 1
+    else:
+        return -1
+def compareIds(id1, id2):
+    """
+    Compara dos ids de libros
+    """
+    if (id1 == id2):
+        return 0
+    elif id1 > id2:
+        return 1
+    else:
+        return -1
+
+
+
+def addProductionCompanie(catalog, production_companie_name, movie):
+    """
+    Esta función adiciona un libro a la lista de libros publicados
+    por un autor.
+    Cuando se adiciona el libro se actualiza el promedio de dicho autor
+    """
+    existproduction_companies = mp.contains( catalog['production_companies'],production_companie_name)
+    if existproduction_companies:
+        entry = mp.get( catalog['production_companies'],production_companie_name)
+        companie = me.getValue(entry)
+    else:
+        companie = newProductionCompanie(production_companie_name)
+        mp.put( catalog['production_companies'], production_companie_name, companie)
+    lt.addLast(companie['movies'],movie )
+    
+    production_companieavg = (companie['vote_average'])
+    movieavg = (movie['vote_average'])
+    if (production_companieavg == 0.0):
+        companie['vote_average'] = float(movieavg)
+    else:
+        companie['vote_average'] = ( production_companieavg + float(movieavg)) / 2
+
+
+
+def addMovie(catalog, movie):
+    """
+    Esta funcion adiciona un libro a la lista de libros,
+    adicionalmente lo guarda en un Map usando como llave su Id.
+    Finalmente crea una entrada en el Map de años, para indicar que este
+    libro fue publicaco en ese año.
+    """
+    lt.addLast(catalog['movies'], movie)
+    mp.put(catalog['id'], movie['id'], movie)
+
+    
+def newProductionCompanie(name):
+    """
+    Crea una nueva estructura para modelar los libros de un autor
+    y su promedio de ratings
+    """
+    companie = {'name': "", "movies":None,"vote_average": 0}
+    companie['name'] = name
+    companie['movies'] = lt.newList('SINGLE_LINKED', compareProductionCompaniesByName)
+    return companie
+def moviesSize(catalog):
+    """
+    Número de libros en el catago
+    """
+    return mp.size(catalog['movies'])
 
 
