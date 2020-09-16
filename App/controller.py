@@ -36,6 +36,13 @@ recae sobre el controlador.
 # ___________________________________________________
 #  Inicializacion del catalogo
 # ___________________________________________________
+def initCatalog():
+    """
+    Llama la funcion de inicializacion del catalogo del modelo.
+    """
+    # catalog es utilizado para interactuar con el modelo
+    catalog = model.newCatalog()
+    return catalog
 
 
 
@@ -44,3 +51,45 @@ recae sobre el controlador.
 #  Funciones para la carga de datos y almacenamiento
 #  de datos en los modelos
 # ___________________________________________________
+def loadData(catalog, moviesdetails):
+    """
+    Carga los datos de los archivos en el modelo
+    """
+    loadmoviesdetails(catalog, moviesdetails)
+
+
+
+#def loadcasting(catalog, castingraw):
+    """
+    Carga en el catalogo los tags a partir de la informacion
+    del archivo de etiquetas
+    """
+   # castingraw = cf.data_dir + castingraw
+    #input_file = csv.DictReader(open(castingraw,encoding='utf-8-sig'))
+    #for movie in input_file:
+     #   model.addTag(catalog, movie)
+#
+def loadmoviesdetails(catalog, moviesdetails):
+    """
+    Carga en el catalogo los tags a partir de la informacion
+    del archivo de etiquetas
+    """
+    moviesdetails = cf.data_dir + moviesdetails
+    input_file = csv.DictReader(open(moviesdetails, encoding='utf-8-sig'), delimiter=";")
+    for movie in input_file:
+        model.addMovie(catalog, movie)
+        model.addProductionCompanie(catalog, movie["production_companies"], movie)
+
+
+def moviessSize(catalog):
+    """Numero de libros leido
+    """
+    return model.moviesSize(catalog)
+
+#FUNCIONES PARA CONSULTA
+def getMoviesByProductionCompanie(catalog, production_companie_name):
+    """
+    Retorna los libros de un autor
+    """
+    production_companieinfo = model.getMoviesByProductionComapnie(catalog, production_companie_name)
+    return production_companieinfo
