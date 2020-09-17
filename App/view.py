@@ -38,15 +38,12 @@ operación seleccionada.
 # ___________________________________________________
 #  Ruta a los archivos
 # ___________________________________________________
-<<<<<<< HEAD
 moviescastingfile="Data/themoviesdb/MoviesCastingRaw-small.csv"
 moviesdetailsfile="Data/themoviesdb/SmallMoviesDetailsCleaned.csv"
-=======
 moviesdetails = 'themoviesdb/SmallMoviesDetailsCleaned.csv'
 #tagsfile = 'GoodReads/themoviesdb/tags.csv'
 #booktagsfile = 'GoodReads/book_tags-small.csv'
 
->>>>>>> j.caceresc
 
 
 
@@ -76,7 +73,6 @@ def printProductionCompanieData(production_companies):
 #  Menu principal
 # ___________________________________________________
 def printMenu():
-<<<<<<< HEAD
     """
     Imprime el menu de opciones
     """
@@ -132,7 +128,6 @@ def main():
                 
 if __name__ == "__main__":
     main()
-=======
     print("Bienvenido")
     print("1- Inicializar Catálogo")
     print("2- Cargar información en el catálogo")
@@ -181,4 +176,3 @@ while True:
     else:
         sys.exit(0)
 sys.exit(0)
->>>>>>> j.caceresc

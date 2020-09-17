@@ -86,10 +86,8 @@ def newCatalog():
 # ==============================
 # Funciones de consulta
 # ==============================
-<<<<<<< HEAD
 def moviessize (listadetails):
     return lt.size(listadetails)
-=======
 def moviesSize(catalog):
     """
     Número de libros en el catago
@@ -104,7 +102,6 @@ def getMoviesByProductionComapnie(catalog, production_companie_name):
         return me.getValue(production_companie)
     return None
 
->>>>>>> j.caceresc
 
 
 def lastelement (listadetails):

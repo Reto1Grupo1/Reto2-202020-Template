@@ -37,7 +37,7 @@ recae sobre el controlador.
 # ___________________________________________________
 #  Inicializacion del catalogo
 # ___________________________________________________
-<<<<<<< HEAD
+
 def loadData(moviesdetailsfile,moviescastingfile):
     """
     Carga los datos de los archivos en el modelo
@@ -46,7 +46,6 @@ def loadData(moviesdetailsfile,moviescastingfile):
     listacasting=loadMoviesCasting(moviescastingfile)
     return listacasting,listadetails
 
-=======
 def initCatalog():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
@@ -54,7 +53,6 @@ def initCatalog():
     # catalog es utilizado para interactuar con el modelo
     catalog = model.newCatalog()
     return catalog
->>>>>>> j.caceresc
 
 def loadMoviesDetails (moviesdetailsfile):
     listadetails = model.loadCSVFile(moviesdetailsfile) #llamar funcion cargar datos 
