@@ -26,6 +26,7 @@ from DISClib.ADT import list as lt
 from DISClib.DataStructures import listiterator as it
 from App import controller as controller
 assert config
+import time
 
 """
 La vista se encarga de la interacción con el usuario.
@@ -154,8 +155,12 @@ while True:
         cont = controller.initCatalog()
 
     elif int(inputs[0]) == 2:
+
         print("Cargando información de los archivos ....")
+        inicio=time.perf_counter()
         controller.loadData(cont, moviesdetails)
+        fin=time.perf_counter()
+        print("Tiempo de ejecucucion",fin-inicio)
         print('Peliculas  cargadas: ' + str(controller.moviessSize(cont)))
     elif int(inputs[0]) == 3:
         number = input("Buscando libros del año?: ")
