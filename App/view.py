@@ -110,9 +110,13 @@ while True:
         #print(cont["production_companies"])
 
     elif int(inputs[0]) == 4:
+        
         production_companie_name = input("Nombre de la companía a buscar: ")
+        inicio=time.perf_counter()
         production_companieinfo = controller.getMoviesByProductionCompanie(cont, production_companie_name)
         printProductionCompanieData(production_companieinfo)
+        fin=time.perf_counter()
+        print("Tiempo que tomo",fin -incio)
         #print(cont["production_companies"])
 
     elif int(inputs[0]) == 5:
