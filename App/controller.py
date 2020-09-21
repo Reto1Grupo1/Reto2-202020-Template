@@ -25,7 +25,6 @@ from App import model
 import csv
 
 
-
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 Existen algunas operaciones en las que se necesita invocar
@@ -37,15 +36,6 @@ recae sobre el controlador.
 # ___________________________________________________
 #  Inicializacion del catalogo
 # ___________________________________________________
-
-def loadData(moviesdetailsfile,moviescastingfile):
-    """
-    Carga los datos de los archivos en el modelo
-    """
-    listadetails=loadMoviesDetails(moviesdetailsfile)
-    listacasting=loadMoviesCasting(moviescastingfile)
-    return listacasting,listadetails
-
 def initCatalog():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
@@ -54,26 +44,9 @@ def initCatalog():
     catalog = model.newCatalog()
     return catalog
 
-def loadMoviesDetails (moviesdetailsfile):
-    listadetails = model.loadCSVFile(moviesdetailsfile) #llamar funcion cargar datos 
-    return listadetails
 
-def loadMoviesCasting(moviescastingfile):
-    listacasting = model.loadCSVFile(moviescastingfile)
-    return listacasting
 
-# ___________________________________________________
-#  Funciones para consultas
-# ___________________________________________________
 
-def moviessize(listadetails):
-    """Numero de libros leido
-    """
-    return model.moviessize(listadetails)
-def lastelement(listadetails):
-    return model.lastelement(listadetails)
-def firstelement(listadetails):
-    return model.firstelement(listadetails)
 # ___________________________________________________
 #  Funciones para la carga de datos y almacenamiento
 #  de datos en los modelos

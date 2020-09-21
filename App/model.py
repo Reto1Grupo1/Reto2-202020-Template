@@ -24,8 +24,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 assert config
-from time import process_time
-import csv
+
 """
 En este archivo definimos los TADs que vamos a usar,
 es decir contiene los modelos con los datos en memoria
@@ -35,17 +34,6 @@ es decir contiene los modelos con los datos en memoria
 # -----------------------------------------------------
 # API del TAD Catalogo de Libros
 # -----------------------------------------------------
-def loadCSVFile (file, sep=";"):
-
-    #lst = lt.newList("ARRAY_LIST") #Usando implementacion arraylist
-    lst = lt.newList("SINGLE_LINKED") #Usando implementacion linkedlist
-    dialect = csv.excel()
-    dialect.delimiter=sep
-    with open(file, encoding="utf-8") as csvfile:
-            spamreader = csv.DictReader(csvfile, dialect=dialect)
-            for row in spamreader: 
-                lt.addLast(lst,row)
-    return lst
 
 
 def newCatalog():
@@ -86,8 +74,6 @@ def newCatalog():
 # ==============================
 # Funciones de consulta
 # ==============================
-def moviessize (listadetails):
-    return lt.size(listadetails)
 def moviesSize(catalog):
     """
     Número de libros en el catago
@@ -104,26 +90,8 @@ def getMoviesByProductionComapnie(catalog, production_companie_name):
 
 
 
-def lastelement (listadetails):
-    last=lt.getElement(listadetails,moviessize(listadetails))
-    infolast={}
-    infolast["original_title"]=last["original_title"]
-    infolast["release_date"]=last["release_date"]
-    infolast["vote_average"]=last["vote_average"]
-    infolast["vote_count"]=last["vote_count"]
-    infolast["original_language"]=last["original_language"]
-    return infolast
 
 
-def firstelement (listadetails):
-    first=lt.getElement(listadetails,1)
-    infofirst={}
-    infofirst["original_title"]=first["original_title"]
-    infofirst["release_date"]=first["release_date"]
-    infofirst["vote_average"]=first["vote_average"]
-    infofirst["vote_count"]=first["vote_count"]
-    infofirst["original_language"]=first["original_language"]
-    return infofirst
 # ==============================
 # Funciones de Comparacion
 # ==============================
@@ -216,5 +184,7 @@ def moviesSize(catalog):
     Número de libros en el catago
     """
     return mp.size(catalog['movies'])
+
+
 
 

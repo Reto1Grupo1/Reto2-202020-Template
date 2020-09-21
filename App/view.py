@@ -28,7 +28,8 @@ from App import controller as controller
 assert config
 import time
 
-"""
+"""                                     
+|   
 La vista se encarga de la interacción con el usuario.
 Presenta el menu de opciones y por cada seleccion
 hace la solicitud al controlador para ejecutar la
@@ -38,9 +39,9 @@ operación seleccionada.
 # ___________________________________________________
 #  Ruta a los archivos
 # ___________________________________________________
-moviescastingfile="Data/themoviesdb/MoviesCastingRaw-small.csv"
-moviesdetailsfile="Data/themoviesdb/SmallMoviesDetailsCleaned.csv"
-moviesdetails = 'themoviesdb/SmallMoviesDetailsCleaned.csv'
+moviescastingfile="MoviesCastingRaw-small.csv"
+moviesdetailsfile="SmallMoviesDetailsCleaned.csv"
+moviesdetails = 'SmallMoviesDetailsCleaned.csv'
 #tagsfile = 'GoodReads/themoviesdb/tags.csv'
 #booktagsfile = 'GoodReads/book_tags-small.csv'
 
@@ -77,8 +78,8 @@ def printMenu():
     print("Bienvenido")
     print("1- Inicializar Catálogo")
     print("2- Cargar información en el catálogo")
-    print("3- Consultar los libros de un año")
-    print("4- Consultar los libros de un autor")
+    print("3- Consultar peliculas por productora") 
+    print("4- Consultar los libros de un año")
     print("5- Consultar los Libros por etiqueta")
     print("0- Salir")
 
@@ -104,20 +105,21 @@ while True:
         print("Tiempo de ejecucucion",fin-inicio)
         print('Peliculas  cargadas: ' + str(controller.moviessSize(cont)))
     elif int(inputs[0]) == 3:
-        number = input("Buscando libros del año?: ")
-        books = controller.getBooksYear(cont, int(number))
-        printBooksbyYear(books)
-        #print(cont["production_companies"])
-
-    elif int(inputs[0]) == 4:
         
         production_companie_name = input("Nombre de la companía a buscar: ")
         inicio=time.perf_counter()
         production_companieinfo = controller.getMoviesByProductionCompanie(cont, production_companie_name)
         printProductionCompanieData(production_companieinfo)
         fin=time.perf_counter()
-        print("Tiempo que tomo",fin -incio)
+        print("Tiempo que tomo",fin - inicio)
         #print(cont["production_companies"])
+    elif int(inputs[0]) == 4:
+        number = input("Buscando libros del año?: ")
+        books = controller.getBooksYear(cont, int(number))
+        printBooksbyYear(books)
+        #print(cont["production_companies"])
+
+    
 
     elif int(inputs[0]) == 5:
         label = input("Etiqueta a buscar: ")
