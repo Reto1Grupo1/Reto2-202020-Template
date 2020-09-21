@@ -25,6 +25,7 @@ from App import model
 import csv
 
 
+
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 Existen algunas operaciones en las que se necesita invocar
@@ -36,6 +37,15 @@ recae sobre el controlador.
 # ___________________________________________________
 #  Inicializacion del catalogo
 # ___________________________________________________
+
+def loadData(moviesdetailsfile,moviescastingfile):
+    """
+    Carga los datos de los archivos en el modelo
+    """
+    listadetails=loadMoviesDetails(moviesdetailsfile)
+    listacasting=loadMoviesCasting(moviescastingfile)
+    return listacasting,listadetails
+
 def initCatalog():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
@@ -44,31 +54,47 @@ def initCatalog():
     catalog = model.newCatalog()
     return catalog
 
+def loadMoviesDetails (moviesdetailsfile):
+    listadetails = model.loadCSVFile(moviesdetailsfile) #llamar funcion cargar datos 
+    return listadetails
 
+def loadMoviesCasting(moviescastingfile):
+    listacasting = model.loadCSVFile(moviescastingfile)
+    return listacasting
 
+# ___________________________________________________
+#  Funciones para consultas
+# ___________________________________________________
 
+def moviessize(listadetails):
+    """Numero de libros leido
+    """
+    return model.moviessize(listadetails)
+def lastelement(listadetails):
+    return model.lastelement(listadetails)
+def firstelement(listadetails):
+    return model.firstelement(listadetails)
 # ___________________________________________________
 #  Funciones para la carga de datos y almacenamiento
 #  de datos en los modelos
 # ___________________________________________________
-def loadData(catalog, moviesdetails):
+def loadData(catalog, moviesdetails,moviescastingfile):
     """
     Carga los datos de los archivos en el modelo
     """
     loadmoviesdetails(catalog, moviesdetails)
+    loadcasting(catalog,moviescastingfile)
 
 
-
-#def loadcasting(catalog, castingraw):
+def loadcasting(catalog, castingraw):
     """
     Carga en el catalogo los tags a partir de la informacion
     del archivo de etiquetas
     """
-   # castingraw = cf.data_dir + castingraw
-    #input_file = csv.DictReader(open(castingraw,encoding='utf-8-sig'))
-    #for movie in input_file:
-     #   model.addTag(catalog, movie)
-#
+    castingraw = cf.data_dir + castingraw
+    input_file = csv.DictReader(open(castingraw, encoding='utf-8-sig'), delimiter=";")
+    for movie in input_file:
+        model.addMovieCasting(catalog,movie)
 def loadmoviesdetails(catalog, moviesdetails):
     """
     Carga en el catalogo los tags a partir de la informacion
@@ -79,8 +105,8 @@ def loadmoviesdetails(catalog, moviesdetails):
     for movie in input_file:
         model.addMovie(catalog, movie)
         model.addProductionCompanie(catalog, movie["production_companies"], movie)
-
-
+        model.add_genre(catalog,movie["genres"],movie)
+        model.addCountrie(catalog,movie["production_countries"],movie)
 def moviessSize(catalog):
     """Numero de libros leido
     """
@@ -93,3 +119,15 @@ def getMoviesByProductionCompanie(catalog, production_companie_name):
     """
     production_companieinfo = model.getMoviesByProductionComapnie(catalog, production_companie_name)
     return production_companieinfo
+def getMoviesByGender(catalog, gender_name):
+    """
+    Retorna los libros de un autor
+    """
+    gender_info = model.getMoviesByGender(catalog, gender_name)
+    return gender_info
+def getMoviesByCountrie(catalog, countrie_name):
+    """
+    Retorna los libros de un autor
+    """
+    countrie_info = model.getMoviesByCountrie(catalog, countrie_name)
+    return countrie_info
