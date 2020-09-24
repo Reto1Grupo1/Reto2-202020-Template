@@ -95,6 +95,9 @@ def loadcasting(catalog, castingraw):
     input_file = csv.DictReader(open(castingraw, encoding='utf-8-sig'), delimiter=";")
     for movie in input_file:
         model.addMovieCasting(catalog,movie)
+        model.add_director(catalog,movie["director_name"],movie["id"])
+        model.addActors(catalog,movie)
+
 def loadmoviesdetails(catalog, moviesdetails):
     """
     Carga en el catalogo los tags a partir de la informacion
@@ -119,15 +122,31 @@ def getMoviesByProductionCompanie(catalog, production_companie_name):
     """
     production_companieinfo = model.getMoviesByProductionComapnie(catalog, production_companie_name)
     return production_companieinfo
+
+def knowDirector(catalog, director_name):
+    director_info = model.knowDirector(catalog, director_name)
+    return director_info
+
+def knowr_actor(catalog,actor,Maximo):
+    return model.know_actor(catalog,actor,Maximo)
+
 def getMoviesByGender(catalog, gender_name):
     """
     Retorna los libros de un autor
     """
     gender_info = model.getMoviesByGender(catalog, gender_name)
     return gender_info
+
 def getMoviesByCountrie(catalog, countrie_name):
     """
     Retorna los libros de un autor
     """
     countrie_info = model.getMoviesByCountrie(catalog, countrie_name)
     return countrie_info
+
+def MayorId(castingraw):
+    castingraw = cf.data_dir + castingraw
+    input_file = csv.DictReader(open(castingraw, encoding='utf-8-sig'), delimiter=";")
+    for movie in input_file:
+        MayorId=model.Maxid(movie)
+    return MayorId

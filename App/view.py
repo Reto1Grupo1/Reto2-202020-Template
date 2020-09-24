@@ -70,6 +70,7 @@ def printProductionCompanieData(production_companies):
             print('Titulo: ' + movie['original_title'] )
     else:
         print('No se encontro la productora')
+        
 def printGenderData(genres):
     """
     Imprime los libros de un autor determinado
@@ -84,6 +85,17 @@ def printGenderData(genres):
             print('Titulo: ' + movie['original_title'] )
     else:
         print('No se encontro el género')
+
+def printDirectorData(director_info):
+    if director_info!=None:
+        print("Peliculas que dirigió: ")
+        for i in director_info[0]:
+            print(i)
+        print("-----------------------")
+        print("Total de películas: "+str(director_info[1]))
+        print("-----------------------")
+        print("Promedio de películas: "+str(director_info[2]))
+        print("-----------------------")
 
 def printCountrieData(countrie,cont):
     """
@@ -137,8 +149,10 @@ while True:
         inicio=time.perf_counter()
         controller.loadData(cont, moviesdetails,moviescastingfile)
         fin=time.perf_counter()
+        Maximo=controller.MayorId(moviescastingfile)
         print("Tiempo de ejecucucion",fin-inicio)
         print('Peliculas  cargadas: ' + str(controller.moviessSize(cont)))
+
     
 
     elif int(inputs[0]) == 1:
@@ -150,10 +164,39 @@ while True:
         fin=time.perf_counter()
         print("Tiempo que tomo",fin - inicio)
         #print(cont["production_companies"])
+
     elif int(inputs[0]) == 2:
-        x
+        director_name = input("Nombre del director que desea consultar:")
+        inicio=time.perf_counter()
+        director_info = controller.knowDirector(cont, director_name)
+        printDirectorData(director_info)
+        fin=time.perf_counter()
+        print("Tiempo que tomo",fin - inicio)
+
     elif int(inputs[0]) == 3:
-        x
+        actor=input("Nombre actor: ")
+        inicio1=time.perf_counter()
+        if actor=="none":
+            print("Ingrese otro autor")
+            actor=input("Nombre actor: ")
+        if actor!="none":
+            try:
+                a=controller.knowr_actor(cont,actor,Maximo)
+                tamaño=len(a[3])
+                print("Director con mas colaboraciones")
+                print(a[0])
+                print("Numero peliculas")
+                print(a[1])
+                print("Promedio peliculas")
+                print(a[2])
+                print("Peliculas")
+                for i in range(0,tamaño):
+                    print(a[3][i]) 
+            except:
+                print("No se encontro al actor")
+            fin1=time.perf_counter()
+
+
     elif int(inputs[0]) == 4:
         gender_name = input("Nombre del género que desea consultar:")
         inicio=time.perf_counter()
