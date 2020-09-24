@@ -122,7 +122,10 @@ def getMoviesByProductionCompanie(catalog, production_companie_name):
     """
     production_companieinfo = model.getMoviesByProductionComapnie(catalog, production_companie_name)
     return production_companieinfo
-
+def average(catalog,production_companie_name):
+    model.average(catalog,production_companie_name)
+def count(catalog,gender_name):
+    model.count(catalog,gender_name)
 def knowDirector(catalog, director_name):
     director_info = model.knowDirector(catalog, director_name)
     return director_info

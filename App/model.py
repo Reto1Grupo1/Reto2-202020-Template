@@ -285,13 +285,20 @@ def addProductionCompanie(catalog, production_companie_name, movie):
         mp.put( catalog['production_companies'], production_companie_name, companie)
     lt.addLast(companie['movies'],movie )
         
-    production_companieavg = (companie['vote_average'])
-    movieavg = (movie['vote_average'])
-    if (production_companieavg == 0.0):
-        companie['vote_average'] = float(movieavg)
-    else:
-        companie['vote_average'] = ( production_companieavg + float(movieavg)) / 2
+    totmovies= lt.size(companie["movies"])
+    movie_average = 0
+    companie["vote_average"]+=float(movie["vote_average"])
 
+def average(catalog,production_companie_name):
+    entry = mp.get( catalog['production_companies'],production_companie_name)
+    companie = me.getValue(entry)
+    talla=lt.size(companie["movies"])
+    companie["vote_average"]= round(companie["vote_average"]/talla,2)
+def count(catalog,gender_name):
+    entry = mp.get( catalog['genres'],gender_name)
+    gender = me.getValue(entry)
+    talla=lt.size(gender["movies"])
+    gender["vote_count"]= round(gender["vote_count"]/talla,2)
 def add_director(catalog,director_name,id):
     existdirector = mp.contains( catalog['directors'],director_name)
     if existdirector:
@@ -318,12 +325,8 @@ def add_genre(catalog,gender_name,movie):
             mp.put( catalog['genres'], gender_name, gender)
         lt.addLast(gender['movies'],movie )
         
-        gendcount = (gender['vote_count'])
-        moviecount = (movie['vote_count'])
-        if (gendcount == 0.0):
-            gender['vote_count'] = float(moviecount)
-        else:
-            gender['vote_count'] = ( gendcount + float(moviecount)) / 2
+    
+        gender["vote_count"]+=float(movie["vote_count"])
 def addCountrie(catalog, countrie_name, movie):
     """
     Esta función adiciona un libro a la lista de libros publicados
